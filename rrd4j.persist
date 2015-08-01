@@ -1,0 +1,14 @@
+// persistence strategies have a name and a definition and are referred to in the "Items" section
+Strategies {
+	// for rrd charts, we need a cron strategy
+	everyMinute : "0 * * * * ?"
+	default = everyChange
+}
+
+Items {
+	TestNodes : strategy = everyChange, everyMinute, restoreOnStartup
+	
+	// let's only store temperature values in rrd
+	TestNodes, Temperature*, Weather_Chart*, Sensor_Chart*, ChartSensorData*, Date : strategy = everyMinute, restoreOnStartup
+	Sensor_Chart* : strategy = everyMinute
+}
